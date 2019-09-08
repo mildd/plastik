@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+{% for post in genre.posts.all %}
+    <!-- Blog Post -->
+        <div class="card mb-4">
+          <img class="card-img-top" src="{{post.image.url}}" alt="{{post.title}}">
+          <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            {% for genre in post.genres.all %}
+            <a class="btn btn-secondary" href="{{ genre.get_absolute_url }}" role="button">{{ genre.title }}</a>
+            {% endfor %}
+            <br><br>
+            <p class="card-text">{{ post.description|slice:":200" }}...</p>
+            <p id="price" class="card-text">Price: {{ post.price}} USD</p>
+            <a href="{{ post.get_absolute_url }}" class="btn
+            btn-primary">Read More &rarr;</a>
+          </div>
+          <div class="card-footer text-muted">
+            {{ post.author }} | {{ post.created_on }}
+          </div>
+        </div>
+{% endfor %}
+{% endblock %}
