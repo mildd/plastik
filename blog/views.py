@@ -3,6 +3,7 @@ from django.views.generic import View
 from .models import *
 from django.shortcuts import render
 from .utils import MixinObject
+from .forms import MessageForm
 
 
 def index_view(request):
@@ -29,5 +30,15 @@ class EventsView(generic.DetailView):
 
 
 def contact_view(request):
-    employees = Employee.objects.all()
-    return render(request, "contact.html", context={"employees": employees})
+    employees = Employee.objects.all
+    if request.method == 'post':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            post = form.save()
+            post.save()
+            mes = 'Your message has been send!'
+            return render(request, 'contact.html', {'employees': employees, 'form': form, 'mes': mes})
+        else:
+            form = MessageForm()
+            return render(request, 'contact.html', {'employees': employees, 'form': form})
+

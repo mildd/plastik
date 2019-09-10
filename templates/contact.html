@@ -54,6 +54,13 @@
   </div>
 </div><br>
 {% endfor %}
+
+  <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+           <button type="submit" class="btn btn-secondary">SEND</button>
+    </form>
+  {{ mes }}
+
 {% endblock %}
   <!-- Footer -->
   <footer class="py-5 bg-primary">

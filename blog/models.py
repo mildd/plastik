@@ -64,3 +64,11 @@ class Employee(models.Model):
 
     def get_absolute_url(self):
         return reverse("contact", kwargs={"slug": self.slug})
+
+
+class Message(models.Model):
+    name = models.CharField(max_length=100)
+    message = models.TextField()
+
+    def __str__(self):
+        return self.name
