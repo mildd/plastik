@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.shortcuts import reverse
 
+
 class Post(models.Model):
     slug = models.SlugField(unique=True)
     title = models.CharField(max_length=200, unique=True)
@@ -69,6 +70,23 @@ class Employee(models.Model):
 class Message(models.Model):
     name = models.CharField(max_length=100)
     message = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+class About(models.Model):
+    image = models.ImageField(upload_to='image')
+    title = models.CharField(max_length=100)
+    text = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.title
+
+
+class Response(models.Model):
+    name = models.CharField(max_length=100)
+    response = models.TextField(max_length=100)
 
     def __str__(self):
         return self.name

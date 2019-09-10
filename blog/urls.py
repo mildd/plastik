@@ -7,4 +7,5 @@ urlpatterns = [
     path("genre/<slug:slug>/", views.genre_detail, name="genre_detail"),
     path("events/<slug:slug>/", views.EventsView.as_view(), name="upcoming_events"),
     path("contact", views.contact_view, name="contact"),
+    path('about', views.about_view, name='about'),
 ]

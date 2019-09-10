@@ -3,7 +3,7 @@ from django.views.generic import View
 from .models import *
 from django.shortcuts import render
 from .utils import MixinObject
-from .forms import MessageForm
+from .forms import MessageForm, ResponseForm
 
 
 def index_view(request):
@@ -20,8 +20,9 @@ class ReadMore(MixinObject, View):
 
 def genre_detail(request, slug):
     genres = Genre.objects.all()
+    events = Event.objects.all()
     genre = Genre.objects.get(slug__iexact=slug)
-    return render(request, "genre_detail.html", context={"genre": genre, "genres": genres})
+    return render(request, "genre_detail.html", context={"genre": genre, "genres": genres, 'events': events})
 
 
 class EventsView(generic.DetailView):
@@ -41,3 +42,18 @@ def contact_view(request):
     else:
         form = MessageForm()
         return render(request, "contact.html", {'employees': employees, 'form': form})
+
+
+def about_view(request):
+    responses = Response.objects.all()
+    abouts = About.objects.all()
+    if request.method == "POST":
+        form = ResponseForm(request.POST)
+        if form.is_valid():
+            post = form.save()
+            post.save()
+            mes = "Your response has been send!"
+            return render(request, 'about.html', {'abouts': abouts, 'form': form, 'responses': responses, 'mes': mes})
+    else:
+        form = ResponseForm()
+        return render(request, 'about.html', {'abouts': abouts, 'form': form, 'responses': responses})
