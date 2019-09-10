@@ -1,20 +1,15 @@
 from django.views import generic
 from django.views.generic import View
 from .models import *
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from .utils import MixinObject
 
 
-# def index_view(request):
-#     posts = Post.objects.all()
-#     genres = Genre.objects.all()
-#     events = Event.objects.all()
-#     return render(request, "index.html", context={"posts": posts, "genres": genres, "events": events})
-
-
-class IndexView(MixinObject, View):
-    model = Post
-    template = "index.html"
+def index_view(request):
+    posts = Post.objects.all()
+    genres = Genre.objects.all()
+    events = Event.objects.all()
+    return render(request, "index.html", context={"posts": posts, "genres": genres, "events": events})
 
 
 class ReadMore(MixinObject, View):
