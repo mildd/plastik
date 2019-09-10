@@ -30,15 +30,14 @@ class EventsView(generic.DetailView):
 
 
 def contact_view(request):
-    employees = Employee.objects.all
-    if request.method == 'post':
+    employees = Employee.objects.all()
+    if request.method == "POST":
         form = MessageForm(request.POST)
         if form.is_valid():
             post = form.save()
             post.save()
-            mes = 'Your message has been send!'
-            return render(request, 'contact.html', {'employees': employees, 'form': form, 'mes': mes})
-        else:
-            form = MessageForm()
-            return render(request, 'contact.html', {'employees': employees, 'form': form})
-
+            mes = "Your message has been send!"
+            return render(request, "contact.html", {'employees': employees, 'form': form, 'mes': mes})
+    else:
+        form = MessageForm()
+        return render(request, "contact.html", {'employees': employees, 'form': form})

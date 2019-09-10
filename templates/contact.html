@@ -38,6 +38,8 @@
   </nav>
   <br><br><br>
 {% block content %}
+  {% load bootstrap_tags %}
+  <div class="container">
 {% for employee in employees %}
 <div class="card mb-12 mx-auto" style="max-width: 1000px;">
   <div class="row no-gutters">
@@ -52,18 +54,26 @@
       </div>
     </div>
   </div>
-</div><br>
+</div></div>
 {% endfor %}
-
+  <div class="container">
+    <div class="row justify-content-center mt-4">
+    <div class="col-5">
   <form method="POST" class="post-form">{% csrf_token %}
-        {{ form.as_p }}
-           <button type="submit" class="btn btn-secondary">SEND</button>
+        {{ form | as_bootstrap }}
+           <button type="submit" class="btn btn-secondary ">SEND</button>
     </form>
-  {{ mes }}
-
+      {% if request.method == "POST" %}
+        <div class="alert alert-success mt-4" role="alert">
+                   {{ mes }}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  </div>
 {% endblock %}
   <!-- Footer -->
-  <footer class="py-5 bg-primary">
+  <footer class="py-5 bg-primary mt-4">
     <div class="container">
       <p class="m-0 text-center text-white">///music without borders</p>
     </div>
