@@ -26,48 +26,35 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-          </li>
-          <li class="nav-item">
+                    <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a class="nav-link" href="{% url 'contact' %}">Contact</a>
           </li>
         </ul>
       </div>
     </div>
   </nav>
   <br><br><br>
-
-  <!-- Page Content -->
-  <div class="container">
-
-    <div class="row">
-
-      <!-- Blog Entries Column -->
-      <div class="col-md-8">
-
-    <!-- Blog Post -->
-        <div class="card mb-4">
-          <img class="card-img-top" src="{{event.image.url}}" alt="{{event.title}}">
-          <div class="card-body">
-            <h2 class="card-title">{{ event.title }}</h2>
-            <p class="card-text"><a href="{{ event.vk_url}}">Мероприятие </a></p>
-            <p class="card-text">{{ event.description}}</p>
-            <p class="card-text">{{ event.line_up }}</p>
-            <p class="card-text">{{ event.date }} | {{event.place }}</p>
-          </div>
-        </div>
-
+{% block content %}
+{% for employee in employees %}
+<div class="card mb-12 mx-auto" style="max-width: 1000px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="{{ employee.image.url }}" class="card-img" alt="{{ employee.name }}">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ employee.name }}</h5>
+        <p class="card-text"><small class="text-muted">{{ employee.position }}</small></p>
+        <p class="card-text">{{ employee.description }}</p>
       </div>
     </div>
-    <!-- /.row -->
-
-
   </div>
-  <!-- /.container -->
-
+</div><br>
+{% endfor %}
+{% endblock %}
   <!-- Footer -->
   <footer class="py-5 bg-primary">
     <div class="container">

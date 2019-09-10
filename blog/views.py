@@ -1,18 +1,25 @@
 from django.views import generic
-from .models import Post, Genre, Event
-from django.shortcuts import render
+from django.views.generic import View
+from .models import *
+from django.shortcuts import render, get_object_or_404
+from .utils import MixinObject
 
 
-def index_view(request):
-    posts = Post.objects.all()
-    genres = Genre.objects.all()
-    events = Event.objects.all()
-    return render(request, "index.html", context={"posts": posts, "genres": genres, "events": events})
+# def index_view(request):
+#     posts = Post.objects.all()
+#     genres = Genre.objects.all()
+#     events = Event.objects.all()
+#     return render(request, "index.html", context={"posts": posts, "genres": genres, "events": events})
 
 
-class ReadMore(generic.DetailView):
+class IndexView(MixinObject, View):
     model = Post
-    template_name = "read_more.html"
+    template = "index.html"
+
+
+class ReadMore(MixinObject, View):
+    model = Post
+    template = "read_more.html"
 
 
 def genre_detail(request, slug):
@@ -21,8 +28,11 @@ def genre_detail(request, slug):
     return render(request, "genre_detail.html", context={"genre": genre, "genres": genres})
 
 
-def events_view(request, slug):
-    events = Event.objects.all()
-    event = Event.objects.get(slug__iexact=slug)
-    return render(request, "upcoming_events.html", context={"events": events, "event": event})
+class EventsView(generic.DetailView):
+    model = Event
+    template_name = "upcoming_events.html"
 
+
+def contact_view(request):
+    employees = Employee.objects.all()
+    return render(request, "contact.html", context={"employees": employees})
